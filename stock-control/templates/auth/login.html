@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Login</h2>
+<form method="POST">
+    {% if form.hidden_tag %}
+            {{ form.hidden_tag() }}
+        {% endif %}
+        {{ form.csrf_token }}
+        {% if form.errors %}
+            <ul class="errors">
+            {% for error in form.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {{ form.email_address.label }} {{ form.email_address(size=10) }}
+        {{ form.password.label }} {{ form.password(size=20) }}
+        <button type="submit">Logar</button>
+</form>
+{% endblock %}

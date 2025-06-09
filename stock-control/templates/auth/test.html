@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Estoque</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Controle de Estoque</h1>
+
+    <form id="estoque-form">
+        <input type="text" id="nome-item" placeholder="Nome do Item" required>
+        <input type="number" id="quantidade-item" placeholder="Quantidade" required>
+        <input type="text" id="categoria-item" placeholder="Categoria" required>
+        <button type="submit">Adicionar Item</button>
+    </form>
+
+    <table id="tabela-estoque">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Itens aparecerão aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('estoque-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome-item').value;
+            const quantidade = document.getElementById('quantidade-item').value;
+            const categoria = document.getElementById('categoria-item').value;
+
+            const tabela = document.getElementById('tabela-estoque').getElementsByTagName('tbody')[0];
+            const novaLinha = tabela.insertRow();
+
+            novaLinha.insertCell(0).textContent = nome;
+            novaLinha.insertCell(1).textContent = quantidade;
+            novaLinha.insertCell(2).textContent = categoria;
+
+            // Limpar o formulário
+            document.getElementById('estoque-form').reset();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Stock-Control</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+  <h1><a href="{{ url_for('stock_control.index') }}">Stock-Control</a></h1>
+  <ul>
+    {% if current_user.is_authenticated %}
+      <li><span>{{ current_user['email'] }}</span>
+      <li><a href="{{ url_for('auth.logout') }}">Deslogar</a>
+    {% else %}
+      <li><a href="{{ url_for('auth.register') }}">Registrar</a>
+      <li><a href="{{ url_for('auth.login') }}">Entrar</a>
+    {% endif %}
+  </ul>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
