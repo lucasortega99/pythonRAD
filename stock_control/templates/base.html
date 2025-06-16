@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Controle de Estoque</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('stock_control.index') }}" class="active">Home</a>
+    <a href="{{ url_for('stock_control.stock') }}">Estoque</a>
+    {% if current_user.is_authenticated %}
+      <div class="topnav-right">
+        <span class="user-email"><b><i>{{ current_user.email }}</b></i></span>
+        <a href="{{ url_for('auth.logout') }}" class="logout">Deslogar</a>
+      </div>
+    {% else %}
+      <a href="{{ url_for('auth.register') }}">Registrar</a>
+      <a href="{{ url_for('auth.login') }}">Entrar</a>
+    {% endif %}
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  <section class="content">
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+
+</body>
+</section>
+
+
+
+</html>

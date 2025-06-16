@@ -1,0 +1,32 @@
+<form id="products_form" hx-post="/stock_control/save_product" hx-swap="outerHTML" hx-on::after-settle="document.getElementById('toast').classList.add('show-toast'); setTimeout(() => document.getElementById('toast').classList.remove('show-toast'), 3000);">
+    {{ form.csrf_token }}
+    <div id="product-list">
+        <!-- Cabeçalho -->
+        <div class="product-group product-header">
+            <span>Nome do produto</span>
+            <span>Quantidade</span>
+            <span>Preço</span>
+            <span>Ações</span>
+        </div>
+        {% for field in form.products %}
+        <div class="product-group" id="product-{{ field.form.id.data }}">
+            {{ field.product_name(placeholder="Nome do produto") }}
+            {{ field.quantity(placeholder="1") }}
+            {{ field.price(placeholder="10.00") }}
+            <button class="delete-btn" {% if field.form.id.data %} hx-post="/stock_control/delete_product/{{ field.form.id.data }}" hx-target="#products_form" hx-swap="outerHTML"{% else %}disabled{% endif %}>Deletar</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit" class="submit-btn">Salvar</button>
+
+    {% if product_added %}
+    <div id="toast" class="toast">Produto adicionado com sucesso!</div>
+    {% endif %}
+    {% if product_deleted %}
+    <div id="toast" class="toast">Produto deletado com sucesso!</div>
+    {% endif %}
+    {% if product_updated %}
+    <div id="toast" class="toast">Produto atualizado com sucesso!</div>
+    {% endif %}
+</form>

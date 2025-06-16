@@ -1,5 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, flash
-from .models import db, User, bcrypt, RegisterForm, LoginForm
+from .models import User
+from .forms import RegisterForm, LoginForm
+from .extensions import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 
 bp = Blueprint("auth", __name__, url_prefix='/auth')
@@ -33,12 +35,12 @@ def logout():
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-    
+
     # Verifica se o usuário já está autenticado
     if current_user.is_authenticated:
         # Se o usuário já estiver autenticado, redireciona para a página inicial
         return redirect(url_for('index'))
-    
+
     if request.method == 'POST':
         if form.validate_on_submit():
             email_address = form.email_address.data
