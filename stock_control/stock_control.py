@@ -1,8 +1,8 @@
-from flask import Blueprint, request, redirect, render_template, url_for, flash
+from flask import Blueprint, redirect, render_template, url_for, flash
 from flask_login import login_required, current_user
 from sqlalchemy import select
 
-from .models import User, Product
+from .models import Product
 from .forms import ProductsForm
 from .extensions import db
 
@@ -64,10 +64,6 @@ def save_product():
         form = ProductsForm(data=data)
 
         return render_template("stock_control/products_form.html", form=form, product_added=product_added, product_updated=product_updated)
-
-    else:
-        print('Error1')
-        print(form.errors)
 
 @bp.route('/add_product')
 @login_required
